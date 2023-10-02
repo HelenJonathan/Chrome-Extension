@@ -2,13 +2,26 @@ import classes from "./hero.module.css";
 import Logo from "./../../assets/images/logo.svg";
 import BackDots from "./../../assets/images/backDots.svg";
 import BackDots2 from "./../../assets/images/backDots2.svg";
-import heroImg1 from "./../../assets/images/heroImg1.png";
+import heroImg1 from "./../../assets/images/heroImg1.png"
 import heroImg2 from "./../../assets/images/heroImg2.png";
 // import heroImg3 from "./../../assets/images/heroImg3.png";
 import { BiRightArrowAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
+// import chrome from "types/chrome"
 
 const Hero = () => {
+
+  const onClick = async () => {
+    let [tab] = await chrome.tabs.query({ active: true});
+    chrome.scripting.executeScript({
+      target: {tabId: tab.id},
+      func: () => {
+        alert("Hello from my extension")
+      }
+    });
+
+  }
+
   return (
     <div className={classes.hero}>
       <nav>
@@ -33,8 +46,8 @@ const Hero = () => {
             Help your friends and loved ones by creating and sending videos on
             how to get things done on a website.
           </p>
-          <Link to="/ready-video">
-            <button>
+          <Link to="/add-to-chrome">
+            <button onClick={onClick}>
               <p>Install HelpMeOut</p>
               <BiRightArrowAlt className={classes.arrowIcon} />
             </button>
